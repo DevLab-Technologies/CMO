@@ -1,0 +1,125 @@
+{
+  "schema": "cmo.template/1",
+  "id": "headline-card",
+  "title": "Headline post or carousel",
+  "kind": "image",
+  "description": "A single post with one headline, an optional line of body text and the logo; or a carousel when slides are given, one PNG per slide.",
+  "formats": [
+    "1x1",
+    "4x5",
+    "9x16",
+    "16x9"
+  ],
+  "directions": [
+    "ltr",
+    "rtl"
+  ],
+  "pages": "slides",
+  "slots": {
+    "language": {
+      "type": "text",
+      "required": false
+    },
+    "direction": {
+      "type": "enum",
+      "values": [
+        "ltr",
+        "rtl"
+      ],
+      "required": false
+    },
+    "ground": {
+      "type": "enum",
+      "values": [
+        "dark",
+        "light",
+        "signature",
+        "surface"
+      ],
+      "required": false
+    },
+    "eyebrow": {
+      "type": "text",
+      "required": false,
+      "max_chars": 32
+    },
+    "headline": {
+      "type": "text",
+      "required": false,
+      "max_chars": 70,
+      "help": "required when there are no slides"
+    },
+    "highlight": {
+      "type": "text",
+      "required": false
+    },
+    "body": {
+      "type": "text",
+      "required": false,
+      "max_chars": 160
+    },
+    "cta": {
+      "type": "text",
+      "required": false,
+      "max_chars": 40,
+      "help": "shown on the single post, or the last slide"
+    },
+    "show_counter": {
+      "type": "enum",
+      "values": [
+        true,
+        false
+      ],
+      "required": false
+    },
+    "slides": {
+      "type": "list",
+      "required": false,
+      "min": 2,
+      "max": 10,
+      "items": {
+        "eyebrow": {
+          "type": "text",
+          "required": false,
+          "max_chars": 32
+        },
+        "headline": {
+          "type": "text",
+          "required": true,
+          "max_chars": 70
+        },
+        "highlight": {
+          "type": "text",
+          "required": false
+        },
+        "body": {
+          "type": "text",
+          "required": false,
+          "max_chars": 160
+        },
+        "ground": {
+          "type": "enum",
+          "values": [
+            "dark",
+            "light",
+            "signature",
+            "surface"
+          ],
+          "required": false
+        }
+      }
+    }
+  },
+  "brand_tokens": [
+    "signature",
+    "on_signature",
+    "dark",
+    "on_dark",
+    "light",
+    "on_light"
+  ],
+  "notes": "Headline at the top; the logo at the bottom on the side brand.json.logo.placement gives (start by default), the call to action opposite. A slide inherits only the card's ground; give eyebrow, body and highlight per slide. Give either a headline or slides. Alt text for each page goes in the deliverable's metadata, written by the designer, not in the image. The surface ground needs the surface and on_surface tokens; the renderer checks the tokens for every ground the fill uses.",
+  "version": "1.0.0",
+  "source": "starter",
+  "approved": null
+}

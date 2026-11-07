@@ -1,0 +1,14 @@
+{
+  "name": "devlab-cmo",
+  "description": "A chief marketing officer for Claude Code",
+  "owner": {
+    "name": "DevLab Technologies"
+  },
+  "plugins": [
+    {
+      "name": "cmo",
+      "source": "./plugins/cmo",
+      "description": "A chief marketing officer that runs strategy, campaigns, stories, content, images, video and audio through specialist agents, with every output checked against your brand."
+    }
+  ]
+}

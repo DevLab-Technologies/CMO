@@ -1,0 +1,240 @@
+{
+  "schema": "cmo.brand/1",
+  "name": "Lumen Books",
+  "name_rules": [
+    "always two words, both capitalized",
+    "never abbreviated to LB"
+  ],
+  "descriptor": "An independent bookshop with a reading club and next-day delivery in the city.",
+  "tagline": "Read something good.",
+  "website": "lumenbooks.example",
+  "languages": [
+    "en",
+    "ar"
+  ],
+  "rule_strength": "MUST and NEVER block; SHOULD advises",
+  "voice": {
+    "traits": [
+      "warm",
+      "plain",
+      "curious"
+    ],
+    "do": [
+      "name the book",
+      "one idea per line"
+    ],
+    "dont": [
+      "exclamation marks in headlines",
+      "superlatives",
+      "jargon"
+    ],
+    "registers": {
+      "marketing": "short and warm: a line a friend would say",
+      "product": "clear: what, when, how much"
+    },
+    "capitalization": "sentence case"
+  },
+  "colors": [
+    {
+      "name": "Lumen Yellow",
+      "hex": "#FFD23F",
+      "role": "signature and highlight"
+    },
+    {
+      "name": "Night",
+      "hex": "#1B1B2F",
+      "role": "type and dark grounds"
+    },
+    {
+      "name": "Paper",
+      "hex": "#FFFBF0",
+      "role": "light grounds"
+    }
+  ],
+  "colors_extended": {
+    "use": "states only",
+    "semantic": {
+      "error": "#B42318"
+    }
+  },
+  "color_pairs": {
+    "allowed": [
+      [
+        "#1B1B2F",
+        "#FFD23F"
+      ],
+      [
+        "#1B1B2F",
+        "#FFFBF0"
+      ],
+      [
+        "#FFFBF0",
+        "#1B1B2F"
+      ],
+      [
+        "#1B1B2F",
+        "#F2EEE3"
+      ]
+    ],
+    "forbidden": [
+      [
+        "#FFD23F",
+        "#FFFBF0"
+      ]
+    ],
+    "note": "pairs are [type color, ground color]"
+  },
+  "gradients": false,
+  "tokens": {
+    "signature": "#FFD23F",
+    "on_signature": "#1B1B2F",
+    "dark": "#1B1B2F",
+    "on_dark": "#FFFBF0",
+    "light": "#FFFBF0",
+    "on_light": "#1B1B2F",
+    "surface": "#F2EEE3",
+    "on_surface": "#1B1B2F",
+    "muted": "#5B5B6E"
+  },
+  "typography": {
+    "display": {
+      "family": "Fraunces",
+      "weight": 700,
+      "tracking": "-0.01em"
+    },
+    "text": {
+      "family": "Inter",
+      "weight": 400
+    },
+    "mono": {
+      "family": "IBM Plex Mono"
+    },
+    "arabic_display": {
+      "family": "Lalezar"
+    },
+    "arabic_text": {
+      "family": "Almarai"
+    },
+    "ratios": {
+      "headline_to_logo": 2.5,
+      "subhead_to_headline": 0.5
+    },
+    "scale": "guidelines 3.2",
+    "never": [
+      "display face for body text"
+    ]
+  },
+  "logo": {
+    "files": {
+      "black": "assets/logo-black.svg",
+      "white": "assets/logo-white.svg"
+    },
+    "colors_allowed": [
+      "Night on Lumen Yellow",
+      "Night on Paper",
+      "Paper on Night"
+    ],
+    "min_width": {
+      "screen_px": 80,
+      "print_mm": 20
+    },
+    "clear_space": "the height of the L on all sides",
+    "placement": {
+      "ltr": "bottom-left",
+      "rtl": "bottom-right",
+      "centered_only": [
+        "covers",
+        "end frames"
+      ]
+    },
+    "lockups": {
+      "partnership": "Lumen Books first; thin divider"
+    },
+    "never": [
+      "rotate",
+      "recolor",
+      "stretch",
+      "shadow",
+      "retype"
+    ]
+  },
+  "signature_device": {
+    "name": "highlight",
+    "rule": "one Lumen Yellow block behind one phrase per view, Night type on it"
+  },
+  "layout": {
+    "margin": "8% of the short side",
+    "margin_ratio": 0.08,
+    "headline": "top",
+    "logo": "bottom margin",
+    "one_idea_per_piece": true
+  },
+  "icons": {
+    "style": "1.5px outline, one color",
+    "emoji": false,
+    "colors_by_ground": {
+      "#FFFBF0": [
+        "#1B1B2F"
+      ],
+      "#1B1B2F": [
+        "#FFFBF0",
+        "#FFD23F"
+      ]
+    }
+  },
+  "imagery": {
+    "style": "real books, real shelves, daylight",
+    "generated": "never AI-generated people or book covers",
+    "never": [
+      "type directly on photos",
+      "stock smiling-reader photos"
+    ]
+  },
+  "motion": {
+    "transitions": "hard cuts",
+    "easing": "ease-out",
+    "never": [
+      "bounce",
+      "spin",
+      "glow"
+    ]
+  },
+  "sound": {
+    "logo": null,
+    "notes": "no sound logo yet",
+    "placement": "end frame only"
+  },
+  "formats": {
+    "9x16": {
+      "size": [
+        1080,
+        1920
+      ],
+      "safe": {
+        "top": 250,
+        "bottom": 300
+      }
+    },
+    "4x5": {
+      "size": [
+        1080,
+        1350
+      ]
+    },
+    "1x1": {
+      "size": [
+        1080,
+        1080
+      ]
+    },
+    "16x9": {
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  },
+  "source": "built",
+  "version": "1.0.0",
+  "updated_at": "2026-11-01T09:00:00Z"
+}

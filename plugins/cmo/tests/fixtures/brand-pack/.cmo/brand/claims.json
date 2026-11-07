@@ -1,0 +1,44 @@
+{
+  "schema": "cmo.claims/1",
+  "allowed": [
+    {
+      "claim": "Next-day delivery in the city on orders placed by 6 pm.",
+      "source": "delivery policy, 2026"
+    },
+    {
+      "claim": "Members get 10% off every book.",
+      "source": "membership terms, 2026"
+    }
+  ],
+  "banned": [
+    {
+      "pattern": "\\b(best|cheapest|biggest)\\b",
+      "reason": "no superlatives",
+      "suggest": "Name the book instead."
+    },
+    {
+      "pattern": "\\bsame[- ]day\\b|\\bin an hour\\b",
+      "reason": "delivery is next day",
+      "except": []
+    },
+    {
+      "pattern": "\\b(free delivery|free shipping)\\b",
+      "reason": "delivery is charged under 30",
+      "suggest": "Delivery free over 30."
+    },
+    {
+      "pattern": "!",
+      "scope": "headlines",
+      "reason": "no exclamation marks in headlines"
+    }
+  ],
+  "disclaimers": [
+    {
+      "when": "mentions member discount",
+      "text": "Membership terms apply."
+    }
+  ],
+  "audience_rule": null,
+  "regulated": null,
+  "ai_labelling": "label AI-generated images where the platform requires it"
+}

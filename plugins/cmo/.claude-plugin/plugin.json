@@ -1,0 +1,10 @@
+{
+  "name": "cmo",
+  "displayName": "CMO",
+  "version": "0.1.0",
+  "description": "A chief marketing officer that runs strategy, campaigns, stories, content, images, video and audio through specialist agents, with every output checked against your brand. Agents coordinate through a shared .cmo/ workspace with an append-only history, so work can be resumed and shared across a team.",
+  "author": {
+    "name": "DevLab Technologies"
+  },
+  "keywords": ["marketing", "brand", "campaigns", "content", "storytelling", "social-media", "video", "orchestration"]
+}

@@ -1,0 +1,39 @@
+{
+  "campaign": "autumn-club",
+  "title": "Autumn reading club",
+  "owner": "Sam",
+  "lock": null,
+  "stage": "production",
+  "goal": "120 new club members by 30 November 2026",
+  "budget": {
+    "currency": "USD",
+    "limit": 500,
+    "spent": 120,
+    "alert_at": 0.8
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Instagram post",
+      "agent": "copywriter",
+      "status": "in_review",
+      "depends_on": [],
+      "estimate": {
+        "human_minutes": 10,
+        "cost_usd": 0,
+        "lead_days": 2
+      },
+      "outputs": [
+        "outputs/instagram-post-v1.md"
+      ],
+      "review": null
+    }
+  ],
+  "approvals_required": [
+    "story",
+    "final_assets",
+    "publish",
+    "spend"
+  ],
+  "updated_at": "2026-11-05T10:00:00Z"
+}

@@ -1,0 +1,11 @@
+{
+  "language": "en",
+  "direction": "ltr",
+  "scenes": [
+    { "type": "hook", "headline": "Your new feature is live.", "highlight": "is live", "ground": "dark" },
+    { "type": "statement", "headline": "Do the thing in one step.", "subhead": "What changes for the customer, in one plain sentence.", "ground": "light" },
+    { "type": "steps", "title": "How it works", "items": ["Open the app", "Choose what you need", "Confirm"], "ground": "dark" },
+    { "type": "figure", "value": "3", "label": "steps from start to done", "ground": "light" },
+    { "type": "end", "line": "Try it today.", "cta": "Download the app", "url": "example.com", "ground": "signature" }
+  ]
+}

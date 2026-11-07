@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Announcement video</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--dark); }
+  body { font-family: var(--font-text); -webkit-font-smoothing: antialiased; }
+
+  .scene {
+    position: absolute; inset: 0; visibility: hidden;
+    display: flex; flex-direction: column;
+    padding: max(var(--margin), var(--safe-top)) max(var(--margin), var(--safe-right))
+             calc(max(var(--margin), var(--safe-bottom)) + var(--logo-h) * 2) max(var(--margin), var(--safe-left));
+    --fit: 1;
+  }
+  .scene.on { visibility: visible; }
+  .g-dark { background: var(--dark); color: var(--on-dark); }
+  .g-light { background: var(--light); color: var(--on-light); }
+  .g-signature { background: var(--signature); color: var(--on-signature); }
+  .g-surface { background: var(--surface); color: var(--on-surface); }
+
+  .content { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: calc(var(--subhead) * 0.8); max-width: 100%; }
+  .f-16x9 .content { max-width: 72%; }
+
+  .headline {
+    font-family: var(--font-display); font-weight: var(--display-weight, 800);
+    letter-spacing: var(--display-tracking, -0.02em);
+    font-size: calc(var(--headline) * var(--fit)); line-height: 1.05;
+  }
+  :root[dir="rtl"] .headline { letter-spacing: 0; line-height: 1.35; }
+  .subhead { font-size: calc(var(--subhead) * var(--fit)); line-height: 1.3; font-weight: 500; }
+  .muted { opacity: 0.72; }
+
+  .hl { position: relative; z-index: 0; color: var(--on-signature); padding: 0 0.08em; white-space: nowrap; }
+  .hl::before {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 0.98em; z-index: -1; background: var(--signature);
+    transform: scaleX(var(--hp, 1)); transform-origin: left center;
+  }
+  :root[dir="rtl"] .hl::before { transform-origin: right center; top: 0; height: auto; }
+
+  .steps { list-style: none; display: flex; flex-direction: column; gap: calc(var(--subhead) * 0.7); }
+  .steps li { display: flex; align-items: baseline; gap: calc(var(--subhead) * 0.6); font-size: calc(var(--subhead) * 1.1 * var(--fit)); font-weight: 600; line-height: 1.25; }
+  .steps .n { font-family: var(--font-display); font-weight: var(--display-weight, 800); min-width: 1.4em; }
+  .g-dark .steps .n { color: var(--signature); }
+
+  .figure { font-family: var(--font-display); font-weight: var(--display-weight, 800); font-size: calc(var(--headline) * 2.2 * var(--fit)); line-height: 0.95; letter-spacing: var(--display-tracking, -0.03em); }
+
+  .media { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+  .media img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+
+  .logo { position: absolute; bottom: max(var(--margin), var(--safe-bottom)); height: var(--logo-h); width: auto; }
+  /* The logo sits at the brand's placement side: start (default) or end, mirrored for RTL. */
+  .logo { inset-inline-start: max(var(--margin), var(--safe-left)); }
+  :root[dir="rtl"] .logo { inset-inline-start: max(var(--margin), var(--safe-right)); }
+  .logo-end .logo { inset-inline-start: auto; inset-inline-end: max(var(--margin), var(--safe-right)); }
+  :root[dir="rtl"] .logo-end .logo { inset-inline-end: max(var(--margin), var(--safe-left)); }
+
+  .end { align-items: center; text-align: center; }
+  .end .content { align-items: center; }
+  .end .big-logo { height: calc(var(--logo-h) * 2.2); width: auto; }
+  .end .cta { font-size: var(--subhead); font-weight: 600; }
+  .end .url { font-family: var(--font-mono); font-size: calc(var(--subhead) * 0.8); }
+
+  .r { will-change: transform, opacity; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+(() => {
+  const C = window.CMO || {
+    format: '1x1', size: [1080, 1080], direction: 'ltr', data: { scenes: [] },
+    brand: { logo: {}, tokens: {} }, root: location.href,
+  };
+  const stage = document.getElementById('stage');
+  document.body.classList.add(`f-${C.format}`);
+  if (C.brand.logo_side === 'end') document.body.classList.add('logo-end');
+
+  const DEFAULTS = { hook: 2.5, statement: 3, figure: 2.5, image: 3, end: 3 };
+  const durationOf = (s) => s.duration || (s.type === 'steps' ? 1.2 + 0.9 * (s.items || []).length : DEFAULTS[s.type] || 3);
+  const esc = (t) => String(t ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // Wrap the first occurrence of the highlight phrase in the signature device.
+  function mark(text, phrase, ground, i) {
+    const t = esc(text);
+    if (!phrase) return t;
+    if (ground === 'signature') { console.warn(`cmo: scene ${i + 1}: highlight skipped on a signature ground`); return t; }
+    const p = esc(phrase);
+    const at = t.indexOf(p);
+    if (at < 0) { console.warn(`cmo: scene ${i + 1}: highlight "${phrase}" is not in the headline`); return t; }
+    return `${t.slice(0, at)}<span class="hl r-hl">${p}</span>${t.slice(at + p.length)}`;
+  }
+
+  const logoFor = (ground) => (ground === 'dark' ? C.brand.logo.white || C.brand.logo.black : C.brand.logo.black || C.brand.logo.white);
+  const scenes = C.data.scenes || [];
+  let t0 = 0;
+  const built = scenes.map((s, i) => {
+    const ground = s.ground || (s.type === 'end' ? 'signature' : 'dark');
+    const el = document.createElement('section');
+    el.className = `scene g-${ground}${s.type === 'end' ? ' end' : ''}`;
+    let html = '';
+    const lines = [];
+    switch (s.type) {
+      case 'hook':
+        html = `<div class="content"><h1 class="headline r">${mark(s.headline, s.highlight, ground, i)}</h1></div>`;
+        lines.push(s.headline);
+        break;
+      case 'statement':
+        html = `<div class="content"><h1 class="headline r">${mark(s.headline, s.highlight, ground, i)}</h1>${s.subhead ? `<p class="subhead r muted">${esc(s.subhead)}</p>` : ''}</div>`;
+        lines.push(s.headline, s.subhead);
+        break;
+      case 'steps':
+        html = `<div class="content">${s.title ? `<p class="subhead r muted">${esc(s.title)}</p>` : ''}<ol class="steps">${(s.items || []).map((it, k) => `<li class="r"><span class="n">${k + 1}</span><span>${esc(it)}</span></li>`).join('')}</ol></div>`;
+        lines.push(s.title, ...(s.items || []));
+        break;
+      case 'figure':
+        html = `<div class="content"><div class="figure r">${esc(s.value)}</div><p class="subhead r">${esc(s.label)}</p>${s.source ? `<p class="subhead r muted" style="font-size:calc(var(--subhead)*.6)">${esc(s.source)}</p>` : ''}</div>`;
+        lines.push(`${s.value} ${s.label || ''}`);
+        break;
+      case 'image': {
+        const src = s.src ? new URL(s.src, C.root).href : '';
+        html = `<div class="media r"><img src="${esc(src)}" alt="${esc(s.alt || '')}"></div>${s.caption ? `<div class="content" style="flex:0"><p class="subhead r">${esc(s.caption)}</p></div>` : ''}`;
+        lines.push(s.caption);
+        break;
+      }
+      case 'end': {
+        const logo = logoFor(ground);
+        html = `<div class="content">${logo ? `<img class="big-logo r" src="${logo}" alt="${esc(C.brand.name)}">` : ''}${s.line ? `<p class="headline r" style="font-size:calc(var(--headline)*.6*var(--fit))">${esc(s.line)}</p>` : ''}${s.cta ? `<p class="cta r">${esc(s.cta)}</p>` : ''}${s.url ? `<p class="url r">${esc(s.url)}</p>` : ''}</div>`;
+        lines.push(s.line, s.cta, s.url);
+        break;
+      }
+      default:
+        console.error(`cmo: scene ${i + 1}: unknown type "${s.type}"`);
+    }
+    if (s.type !== 'end') {
+      const logo = logoFor(ground);
+      if (logo) html += `<img class="logo" src="${logo}" alt="">`;
+    }
+    el.innerHTML = html;
+    stage.appendChild(el);
+    const d = durationOf(s);
+    const scene = { el, type: s.type, start: t0, end: t0 + d, reveals: [...el.querySelectorAll('.r')], hls: [...el.querySelectorAll('.r-hl')], lines: lines.filter(Boolean).map((x) => String(x).trim()) };
+    t0 += d;
+    return scene;
+  });
+
+  window.DURATION = t0;
+  window.POSTER_AT = built.length ? built[built.length - 1].start + 1.2 : 0;
+  // The sound logo lands just after the cut to the end frame.
+  window.SOUND_LOGO_AT = built.length && scenes[scenes.length - 1].type === 'end' ? Number((built[built.length - 1].start + 0.3).toFixed(3)) : null;
+  window.SCENES = built.map((s) => ({ type: s.type, start: Number(s.start.toFixed(3)), end: Number(s.end.toFixed(3)) }));
+  // Default captions: each on-screen line exactly as written, sharing its scene's time by length.
+  window.CAPTIONS = Array.isArray(C.data.captions) && C.data.captions.length
+    ? C.data.captions
+    : built.flatMap((s) => {
+      const total = s.lines.reduce((n, l) => n + l.length, 0) || 1;
+      let t = s.start;
+      return s.lines.map((text) => {
+        const c = { start: t, end: t + ((s.end - s.start) * text.length) / total, text };
+        t = c.end;
+        return c;
+      });
+    });
+
+  const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+  const lift = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--logo-h')) * 0.5 || 20;
+
+  // Pure function of t: every frame is drawn from scratch.
+  window.setTime = (t) => {
+    built.forEach((s) => {
+      const on = t >= s.start && (t < s.end || (s === built[built.length - 1] && t >= s.end));
+      s.el.classList.toggle('on', on);
+      if (!on) return;
+      const local = t - s.start;
+      s.reveals.forEach((r, k) => {
+        const p = ease((local - 0.15 - k * 0.12) / 0.45);
+        r.style.opacity = p;
+        r.style.transform = `translateY(${((1 - p) * lift).toFixed(2)}px)`;
+      });
+      s.hls.forEach((h) => h.style.setProperty('--hp', ease((local - 0.35) / 0.4).toFixed(3)));
+    });
+  };
+
+  // Fit: shrink a scene's type (to 70% at most) until it fits; fail the render if it still doesn't.
+  window.cmoReady = document.fonts.ready.then(() => {
+    built.forEach((s, i) => {
+      s.el.style.visibility = 'visible';
+      const box = s.el.querySelector('.content');
+      let fit = 1;
+      const over = () => box && (box.scrollHeight > box.clientHeight + 1 || box.scrollWidth > box.clientWidth + 1);
+      while (over() && fit > 0.7) { fit -= 0.05; s.el.style.setProperty('--fit', fit.toFixed(2)); }
+      if (over()) console.error(`cmo: scene ${i + 1} text does not fit the ${C.format} format; shorten it`);
+      else if (fit < 1) console.warn(`cmo: scene ${i + 1} type reduced to ${Math.round(fit * 100)}% to fit ${C.format}`);
+      s.el.style.visibility = '';
+    });
+    window.setTime(0);
+  });
+})();
+</script>
+</body>
+</html>

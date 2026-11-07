@@ -1,0 +1,239 @@
+{
+  "schema": "cmo.template/1",
+  "id": "announce-video",
+  "title": "Announcement video",
+  "kind": "video",
+  "description": "A short announcement in scenes: a hook, the message, the proof or the steps, an optional product image, and an end frame with the logo. 10 to 30 seconds. One master renders every format.",
+  "formats": [
+    "9x16",
+    "4x5",
+    "1x1",
+    "16x9"
+  ],
+  "directions": [
+    "ltr",
+    "rtl"
+  ],
+  "fps": 30,
+  "pages": null,
+  "slots": {
+    "language": {
+      "type": "text",
+      "required": false,
+      "help": "en, ar, ... (default: the brand's first language)"
+    },
+    "direction": {
+      "type": "enum",
+      "values": [
+        "ltr",
+        "rtl"
+      ],
+      "required": false
+    },
+    "scenes": {
+      "type": "list",
+      "required": true,
+      "min": 2,
+      "max": 8,
+      "help": "One item per scene, in order. The last scene should be an end scene.",
+      "items": {
+        "by": "type",
+        "variants": {
+          "hook": {
+            "headline": {
+              "type": "text",
+              "required": true,
+              "max_chars": 48
+            },
+            "highlight": {
+              "type": "text",
+              "required": false,
+              "help": "a phrase from the headline to put on the signature device"
+            },
+            "ground": {
+              "type": "enum",
+              "values": [
+                "dark",
+                "light",
+                "signature",
+                "surface"
+              ],
+              "required": false
+            },
+            "duration": {
+              "type": "number",
+              "required": false
+            }
+          },
+          "statement": {
+            "headline": {
+              "type": "text",
+              "required": true,
+              "max_chars": 60
+            },
+            "highlight": {
+              "type": "text",
+              "required": false
+            },
+            "subhead": {
+              "type": "text",
+              "required": false,
+              "max_chars": 90
+            },
+            "ground": {
+              "type": "enum",
+              "values": [
+                "dark",
+                "light",
+                "signature",
+                "surface"
+              ],
+              "required": false
+            },
+            "duration": {
+              "type": "number",
+              "required": false
+            }
+          },
+          "steps": {
+            "title": {
+              "type": "text",
+              "required": false,
+              "max_chars": 40
+            },
+            "items": {
+              "type": "list",
+              "required": true,
+              "min": 2,
+              "max": 4
+            },
+            "ground": {
+              "type": "enum",
+              "values": [
+                "dark",
+                "light",
+                "signature",
+                "surface"
+              ],
+              "required": false
+            },
+            "duration": {
+              "type": "number",
+              "required": false
+            }
+          },
+          "figure": {
+            "value": {
+              "type": "text",
+              "required": true,
+              "max_chars": 8
+            },
+            "label": {
+              "type": "text",
+              "required": true,
+              "max_chars": 50
+            },
+            "source": {
+              "type": "text",
+              "required": false,
+              "max_chars": 60,
+              "help": "where the number comes from, shown small"
+            },
+            "ground": {
+              "type": "enum",
+              "values": [
+                "dark",
+                "light",
+                "signature",
+                "surface"
+              ],
+              "required": false
+            },
+            "duration": {
+              "type": "number",
+              "required": false
+            }
+          },
+          "image": {
+            "src": {
+              "type": "image",
+              "required": true,
+              "help": "path from the project root; a product screen or an approved photo with a rights record"
+            },
+            "alt": {
+              "type": "text",
+              "required": true
+            },
+            "caption": {
+              "type": "text",
+              "required": false,
+              "max_chars": 60
+            },
+            "ground": {
+              "type": "enum",
+              "values": [
+                "dark",
+                "light",
+                "signature",
+                "surface"
+              ],
+              "required": false
+            },
+            "duration": {
+              "type": "number",
+              "required": false
+            }
+          },
+          "end": {
+            "line": {
+              "type": "text",
+              "required": false,
+              "max_chars": 40
+            },
+            "cta": {
+              "type": "text",
+              "required": false,
+              "max_chars": 40
+            },
+            "url": {
+              "type": "text",
+              "required": false,
+              "max_chars": 40
+            },
+            "ground": {
+              "type": "enum",
+              "values": [
+                "dark",
+                "light",
+                "signature",
+                "surface"
+              ],
+              "required": false
+            },
+            "duration": {
+              "type": "number",
+              "required": false
+            }
+          }
+        }
+      }
+    },
+    "captions": {
+      "type": "list",
+      "required": false,
+      "help": "[{start, end, text}] in seconds: the voice-over script. Default: each scene's on-screen text for its duration."
+    }
+  },
+  "brand_tokens": [
+    "signature",
+    "on_signature",
+    "dark",
+    "on_dark",
+    "light",
+    "on_light"
+  ],
+  "notes": "Hard cuts between scenes; lines rise in with an ease-out. The logo sits at the bottom on the side brand.json.logo.placement gives (start by default) on every scene except the end frame, where it is centred: on a dark ground the white logo, otherwise the black one. The sound logo belongs on the end frame: build the soundtrack with the audio-producer so it lands at the start of the last scene plus about 0.3 s. Default captions are each on-screen line exactly as written; give captions for a voice-over. Type shrinks to 70% at most to fit a format; beyond that the render fails and names the scene. The surface ground needs the surface and on_surface tokens; the renderer checks the tokens for every ground the fill uses.",
+  "version": "1.0.0",
+  "source": "starter",
+  "approved": null
+}

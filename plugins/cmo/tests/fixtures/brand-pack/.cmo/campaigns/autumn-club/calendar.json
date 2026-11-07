@@ -1,0 +1,58 @@
+{
+  "schema": "cmo.calendar/1",
+  "campaign": "autumn-club",
+  "timezone": "Europe/London",
+  "items": [
+    {
+      "id": "CAL-001",
+      "date": "2026-11-09",
+      "time": "18:00",
+      "channel": "instagram",
+      "placement": "feed",
+      "format": "4x5",
+      "language": "en",
+      "title": "Club launch post",
+      "copy": "outputs/instagram-post-v1.md",
+      "asset": null,
+      "link": "https://lumenbooks.example/club?utm_source=instagram&utm_medium=social&utm_campaign=autumn-club&utm_content=launch-post",
+      "status": "drafted",
+      "owner": "Sam",
+      "paid": false,
+      "notes": ""
+    },
+    {
+      "id": "CAL-002",
+      "date": "2026-11-09",
+      "time": "19:00",
+      "channel": "instagram",
+      "placement": "stories",
+      "format": "9x16",
+      "language": "en",
+      "title": "Club launch story",
+      "copy": null,
+      "asset": null,
+      "link": null,
+      "status": "planned",
+      "owner": null,
+      "paid": false,
+      "notes": ""
+    },
+    {
+      "id": "CAL-003",
+      "date": "2026-11-14",
+      "time": "12:00",
+      "channel": "linkedin",
+      "placement": "feed",
+      "format": "1x1",
+      "language": "en",
+      "title": "Why we started a club",
+      "copy": null,
+      "asset": null,
+      "link": null,
+      "status": "planned",
+      "owner": "Sam",
+      "paid": false,
+      "notes": ""
+    }
+  ]
+}

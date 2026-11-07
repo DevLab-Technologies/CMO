@@ -1,0 +1,11 @@
+{
+  "language": "en",
+  "ground": "light",
+  "eyebrow": "New",
+  "cta": "Learn more at example.com",
+  "slides": [
+    { "headline": "One headline that says what changed.", "highlight": "what changed", "ground": "light" },
+    { "eyebrow": "Why it matters", "headline": "The outcome for the customer.", "body": "One sentence of detail that supports the headline with a fact.", "ground": "dark" },
+    { "eyebrow": "Get started", "headline": "The single next step.", "ground": "signature" }
+  ]
+}

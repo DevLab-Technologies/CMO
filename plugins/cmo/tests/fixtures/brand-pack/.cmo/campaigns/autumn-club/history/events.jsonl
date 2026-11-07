@@ -1,0 +1,2 @@
+{"at":"2026-11-05T09:00:00Z","actor":"cmo","task":null,"event":"campaign_created","outputs":[],"cost_usd":0,"note":""}
+{"at":"2026-11-05T10:00:00Z","actor":"copywriter","task":"TASK-001","event":"completed","outputs":["outputs/instagram-post-v1.md"],"cost_usd":0.03,"note":""}

@@ -1,0 +1,4 @@
+.DS_Store
+
+# Eval run results
+plugins/cmo/evals/results/

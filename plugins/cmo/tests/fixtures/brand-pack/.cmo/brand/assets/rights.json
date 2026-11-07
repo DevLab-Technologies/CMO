@@ -1,0 +1,18 @@
+[
+  {
+    "file": "assets/logo-black.svg",
+    "source": "owned",
+    "license": "owned",
+    "expires": null,
+    "releases": null,
+    "notes": "fixture"
+  },
+  {
+    "file": "assets/logo-white.svg",
+    "source": "owned",
+    "license": "owned",
+    "expires": null,
+    "releases": null,
+    "notes": "fixture"
+  }
+]
