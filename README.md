@@ -16,15 +16,30 @@ A chief marketing officer for Claude Code. It turns a business goal into a strat
 
 New to it? Start with the [user guide](docs/user-guide.md).
 
-## Try it locally
+## Install
 
-From the project you want to market:
+Works the same on macOS, Linux and Windows. In a terminal:
 
 ```bash
-claude --plugin-dir ~/Dev/cmo/plugins/cmo
+claude plugin marketplace add DevLab-Technologies/CMO
 ```
 
-Then in the session:
+```bash
+claude plugin install cmo@devlab-cmo
+```
+
+Or inside a Claude Code session:
+
+```text
+/plugin marketplace add DevLab-Technologies/CMO
+/plugin install cmo@devlab-cmo
+```
+
+Update later with `claude plugin marketplace update devlab-cmo`.
+
+## Get started
+
+In the project you want to market, start Claude Code and run:
 
 ```text
 /cmo:init
@@ -35,11 +50,11 @@ Then in the session:
 /cmo:status
 ```
 
-After editing the plugin, run `/reload-plugins` in the session.
-
 ### Rendering images and video
 
-Templates render with Node.js 18+, Playwright, Chrome and ffmpeg (ffmpeg is for video only). `/cmo:templates check` reports what's missing. The usual setup on a Mac:
+Templates render with Node.js 18+, Playwright, Chrome and ffmpeg (ffmpeg is for video only). `/cmo:templates check` reports what's missing.
+
+macOS / Linux:
 
 ```bash
 npm install --prefix ~/.cmo/render playwright-core
@@ -49,17 +64,31 @@ npm install --prefix ~/.cmo/render playwright-core
 brew install ffmpeg
 ```
 
+(On Linux, install ffmpeg with your package manager, for example `sudo apt install ffmpeg`.)
+
+Windows (PowerShell):
+
+```powershell
+npm install --prefix "$HOME\.cmo\render" playwright-core
+```
+
+```powershell
+winget install Gyan.FFmpeg
+```
+
+Open a new terminal after installing ffmpeg so it is on your `PATH`. If Chrome is installed somewhere unusual, set `CHROME_PATH` to its full path.
+
 Without rendering, cmo still plans, writes and reviews; visual tasks stop and say what's needed.
 
-## Install from this marketplace
+## Develop the plugin
+
+Clone the repository, then load the plugin straight from your checkout (run from the project you want to market, with the path to your clone):
 
 ```bash
-claude plugin marketplace add ~/Dev/cmo
+claude --plugin-dir path/to/CMO/plugins/cmo
 ```
 
-```bash
-claude plugin install cmo@devlab-cmo
-```
+After editing the plugin, run `/reload-plugins` in the session.
 
 ## Test
 
@@ -80,7 +109,7 @@ Run one group with `--tag smoke` (or `guardrail`, `brand`, `planning`, `measurem
 Validate the manifests:
 
 ```bash
-claude plugin validate ~/Dev/cmo && claude plugin validate ~/Dev/cmo/plugins/cmo --strict
+claude plugin validate . && claude plugin validate plugins/cmo --strict
 ```
 
 ## How it works
